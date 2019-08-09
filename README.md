@@ -1,2 +1,2 @@
-# truffle-init
-Initializer for example Truffle projects
+# truffle-conflux-init
+Initializer for example Truffle Conflux projects
