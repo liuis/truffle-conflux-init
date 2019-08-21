@@ -1,6 +1,6 @@
 {
-  "name": "truffle-init",
-  "version": "1.0.7",
+  "name": "truffle-conflux-init",
+  "version": "0.0.1",
   "description": "Initializer for example Truffle projects",
   "main": "index.js",
   "scripts": {
@@ -30,6 +30,6 @@
     "truffle-conflux-config": "../../truffle-conflux/packages/truffle-conflux-config"
   },
   "devDependencies": {
-    "mocha": "^3.2.0"
+    "mocha": "^3.5.3"
   }
 }
