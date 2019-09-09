@@ -1,4 +1,4 @@
-var Config = require("truffle-config");
+var Config = require("truffle-conflux-config");
 var temp = require("temp");
 var ghdownload = require('github-download');
 var path = require("path");
@@ -11,19 +11,19 @@ var Init = {
   // Note we use a temporary directory because ghdownload doesn't like
   // when the directory exists.
   fromGithub: function(config, name, destination) {
-    var expected_full_name = "truffle-init-" + name;
-    var temp_directory = path.join(config.working_directory, ".truffle_init_temp");
+    var expected_full_name = "truffle-conflux-init-" + name;
+    var temp_directory = path.join(config.working_directory, ".truffle_conflux_init_temp");
 
     var init_config;
 
     // First check for existence of truffle.js or truffle-config.js within the destination.
     // If either exist, fail.
     return Promise.resolve().then(function() {
-      var config_path = path.join(destination, "truffle.js");
-      var alternate_path = path.join(destination, "truffle-config.js");
+      var config_path = path.join(destination, "truffle-conflux.js");
+      var alternate_path = path.join(destination, "truffle-conflux-config.js");
 
       if (fs.existsSync(config_path) || fs.existsSync(alternate_path)) {
-        throw new Error("A Truffle project already exists at the destination. Stopping to prevent overwriting data.");
+        throw new Error("A Truffle Conflux project already exists at the destination. Stopping to prevent overwriting data.");
       }
     }).then(function() {
       // Next let's see if the expected repository exists. If it doesn't, ghdownload
@@ -33,7 +33,8 @@ var Init = {
         var options = {
           method: 'HEAD',
           host: 'raw.githubusercontent.com',
-          path: '/trufflesuite/' + expected_full_name + "/master/truffle.js"
+          //path: '/trufflesuite/' + expected_full_name + "/master/truffle.js"
+          path: '/liuis/' + expected_full_name + "/master/truffle-conflux.js"
         };
         req = https.request(options, function(r) {
           if (r.statusCode == 404) {
@@ -62,7 +63,8 @@ var Init = {
 
         // Download the package from github.
         ghdownload({
-          user: 'trufflesuite',
+          //user: '',
+          user: 'liuis',
           repo: expected_full_name,
           ref: 'master'
         }, temp_directory)
@@ -88,7 +90,7 @@ var Init = {
     }).then(function() {
       // Find the truffle-init.json file, and remove anything that should be ignored.
       return new Promise(function(accept, reject) {
-        fs.readFile(path.join(destination, "truffle-init.json"), "utf8", function(err, body) {
+        fs.readFile(path.join(destination, "truffle-conflux-init.json"), "utf8", function(err, body) {
           // We can't read the file, so let's assume it doesn't exist.
           if (err) {
             return accept({});
@@ -103,7 +105,7 @@ var Init = {
 
           // Now that we have the config, edit it to set it to remove the truffle-init.json file.
           body.ignore = body.ignore || [];
-          body.ignore.push("truffle-init.json");
+          body.ignore.push("truffle-conflux-init.json");
 
           // Otherwise, we got it.
           accept(body);
@@ -165,7 +167,7 @@ var Init = {
       name = "default";
     }
 
-    temp.mkdir("truffle-sandbox-", function(err, dirPath) {
+    temp.mkdir("truffle-conflux-sandbox-", function(err, dirPath) {
       if (err) return callback(err);
 
       self.fromGithub({
@@ -174,7 +176,7 @@ var Init = {
         },
         working_directory: dirPath
       }, name, dirPath).then(function() {
-        var config = Config.load(path.join(dirPath, "truffle.js"), {});
+        var config = Config.load(path.join(dirPath, "truffle-conflux.js"), {});
         callback(null, config);
       }).catch(callback);
     });

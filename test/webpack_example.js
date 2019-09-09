@@ -9,7 +9,7 @@ describe("Webpack", function() {
     logger: {
       log: function() {}
     },
-    working_directory: path.join(__dirname, ".truffle_test_temp")
+    working_directory: path.join(__dirname, ".truffle_conflux_test_temp")
   };
   var destination = config.working_directory;
 
@@ -27,7 +27,7 @@ describe("Webpack", function() {
 
     return Init.fromGithub(config, "webpack", destination).then(function() {
       // Note: the file we're looking for exists in the trufflesuite/truffle-init-default repo!
-      var expected_file_path = path.join(destination, "truffle.js");
+      var expected_file_path = path.join(destination, "truffle-conflux.js");
       assert(fs.existsSync(expected_file_path), "Expected file doesn't exist!");
     });
   });
